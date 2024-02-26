@@ -21,9 +21,6 @@ beers <- read.csv("~/Downloads/Beers.csv")
 breweries <- read.csv("~/Downloads/Breweries.csv")
 ```
 
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
 
 How many breweries are present in each state?
 
@@ -50,6 +47,7 @@ Address the missing values in each column.
 
 ```{r}
 summary(merged_data)
+cleaned_data <- na.omit(merged_data)
 
 ```
 
