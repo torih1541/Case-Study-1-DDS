@@ -62,7 +62,7 @@ medians_by_state <- cleaned_data %>%
 ggplot(medians_by_state, aes(x = State)) +
   geom_bar(aes(y = Median_ABV, fill = "Median ABV"), stat = "identity", position = "dodge") +
   geom_bar(aes(y = Median_IBU, fill = "Median IBU"), stat = "identity", position = "dodge") +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
   labs(y = "Median Value", fill = "Metric") +
   ggtitle("Median Alcohol Content and IBU by State")
 ```
