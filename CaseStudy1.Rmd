@@ -15,7 +15,9 @@ library(readr)
 
 ## Introduction 
 
-The introduction needs to be written as if you are presenting the work to the CEO and CFO of Budweiser (your client) and that they only have had one class in statistics. You may assume that the CEO and CFO gave you the data and gave you the directive to report any interesting finding that you may uncover through your analysis.
+We have undertaken a comprehensive analysis of two important datasets that provide a detailed snapshot of the brewing industry. The first dataset encapsulates a wealth of information on 2,410 U.S. craft beers, covering aspects such as their alcohol by volume (ABV), International Bitterness Units (IBUs), and beer style. This data offers valuable insights into the popularity of various beer styles, the correlation between ABV and IBUs, and potential market trends.
+The second dataset provides records on 558 U.S. breweries, including their location and size. This dataset will allow us to understand geographical distribution, market saturation, and opportunities for expansion. By cross-referencing these datasets, we can identify patterns and trends that could inform Budweiser's strategic decisions.
+Our goal is to present these findings in a clear and impactful manner, focusing on the implications of the data rather than the technicalities of the analysis. We trust that these insights will contribute significantly to shaping Budweiser's future strategies. Thank you for your time, and we look forward to discussing our findings with you.
 
 ```{r beers and breweries}
 beers <- read.csv("~/Downloads/Beers.csv")
@@ -71,11 +73,16 @@ ggplot(medians_by_state, aes(x = State)) +
 Which state has the maximum alcoholic (ABV) beer? Which state has the most bitter (IBU) beer?
 
 ```{r}
-
+# Determine which state has the maximum ABV
+ state_with_max_ABV <- cleaned_data[which.max(cleaned_data$ABV),]$State
+ print(paste("The state with the maximum alcoholic (ABV) beer is", state_with_max_ABV))
+ # Determine which state has the maximum IBU
+state_with_max_IBU <- cleaned_data[which.max(cleaned_data$IBU),]$State
+print(paste("The state with the most bitter (IBU) beer is", state_with_max_IBU))
 ```
 
 Comment on the summary statistics and distribution of the ABV variable.
-
+#Through an analysis of our beer dataset, we've identified key insights into the Alcohol by Volume (ABV) and International Bitterness Units (IBU). The ABV ranges from 0.1% to 12.8%, with the majority of beers sitting around 5.6%. However, the average ABV is slightly higher at 5.98%, indicating the presence of some significantly stronger beers. When it comes to bitterness as measured by IBUs, the median value is 35, but the mean is 42.71, showing that some beers have a considerably high bitterness level. A regional analysis highlights Kentucky as the producer of the beer with the highest ABV, while Oregon leads with the most bitter beer. It's important to note that these findings are based on our current dataset, and may not represent all beers. We also handled missing data points responsibly; specifically, 62 instances where the ABV was not recorded were excluded from the analysis. These insights could be valuable in shaping marketing strategies and understanding regional taste preferences.
 Is there an apparent relationship between the bitterness of the beer and its alcoholic content? Draw a scatter plot.  Make your best judgment of a relationship and EXPLAIN your answer.
 
 ```{r}
