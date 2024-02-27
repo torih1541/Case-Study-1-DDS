@@ -28,9 +28,40 @@ breweries <- read.csv("~/Downloads/Breweries.csv")
 How many breweries are present in each state?
 
 ```{r}
+state_map <- c(
+  "AL" = "Alabama", AK = "Alaska", AZ = "Arizona", AR = "Arkansas", CA = "California",
+  CO = "Colorado", CT = "Connecticut", DE = "Delaware", FL = "Florida", GA = "Georgia",
+  HI = "Hawaii", ID = "Idaho", IL = "Illinois", IN = "Indiana", IA = "Iowa",
+  KS = "Kansas", KY = "Kentucky", LA = "Louisiana", ME = "Maine", MD = "Maryland",
+  MA = "Massachusetts", MI = "Michigan", "MN" = "Minnesota", MS = "Mississippi", MO = "Missouri",
+  MT = "Montana", NE = "Nebraska", NV = "Nevada", NH = "New Hampshire", NJ = "New Jersey",
+  NM = "New Mexico", NY = "New York", NC = "North Carolina", ND = "North Dakota", OH = "Ohio",
+  OK = "Oklahoma", OR = "Oregon", PA = "Pennsylvania", RI = "Rhode Island", SC = "South Carolina",
+  SD = "South Dakota", TN = "Tennessee", TX = "Texas", UT = "Utah", VT = "Vermont",
+  VA = "Virginia", WA = "Washington", WV = "West Virginia", WI = "Wisconsin", WY = "Wyoming"
+)
+breweries <- breweries %>%
+  mutate(State = str_trim(State), # Trim leading and trailing spaces
+         State = toupper(State), # Convert to uppercase to match the keys in state_map
+         StateFullName = state_map[State])
+
 breweries_by_state <- breweries %>%
-  group_by(State) %>%
+  group_by(StateFullName) %>%
   summarise(NumberOfBreweries = n())
+
+states_map <- map_data("state")
+
+states_map$region <- sapply(states_map$region, toTitleCase)
+
+map_data <- merge(states_map, breweries_by_state, by.x = "region", by.y = "StateFullName", all.x = TRUE)
+
+ggplot(data = map_data, aes(x = long, y = lat, group = group, fill = NumberOfBreweries)) +
+  geom_polygon(color = "white") +
+  scale_fill_gradient(low = "lightblue", high = "darkblue", name = "Brewery Count") +
+  labs(title = "Number of Breweries by State", x = "", y = "") +
+  theme_minimal() +
+  theme(axis.text = element_blank(), axis.title = element_blank(), panel.grid = element_blank(), panel.background = element_blank())
+
 ```
 
 Merge beer data with the breweries data. Print the first 6 observations and the last six observations to check the merged file.
