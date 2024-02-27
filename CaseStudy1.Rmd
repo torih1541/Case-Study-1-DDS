@@ -79,6 +79,12 @@ Comment on the summary statistics and distribution of the ABV variable.
 Is there an apparent relationship between the bitterness of the beer and its alcoholic content? Draw a scatter plot.  Make your best judgment of a relationship and EXPLAIN your answer.
 
 ```{r}
-
+ggplot(cleaned_data, aes(x = ABV, y = IBU)) +
+  geom_point(alpha = 0.5) +
+  theme_minimal() +
+  labs(x = "Alcohol By Volume (ABV)", 
+       y = "International Bitterness Units (IBU)", 
+       title = "Relationship between Beer Bitterness and Alcoholic Content") +
+  geom_smooth(method = "lm", se = FALSE, color = "blue")
 ```
 
