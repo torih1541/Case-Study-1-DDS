@@ -214,7 +214,7 @@ ggplot(cleaned_data, aes(x = ABV, y = IBU)) +
 ```{r}
 # Prepare the beers dataset
 beers <- beers %>%
-  filter(grepl("Ale", Style, ignore.case = TRUE)) %>%
+  filter(grepl("Ale", Style, ignore.case = TRUE) | grepl("IPA", Style, ignore.case = TRUE)) %>%
   mutate(Category = ifelse(grepl("IPA", Style, ignore.case = TRUE), "IPA", "Other Ale"))
 
 # Remove missing values
