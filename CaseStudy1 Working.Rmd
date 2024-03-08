@@ -209,7 +209,7 @@ ggplot(cleaned_data, aes(x = ABV, y = IBU)) +
 
 #### Budweiser would also like to investigate the difference with respect to IBU and ABV between IPAs (India Pale Ales) and other types of Ale (any beer with “Ale” in its name other than IPA).  You decide to use KNN classification to investigate this relationship.  Provide statistical evidence one way or the other.
 
-\*\*\* KNN & supplementary commentary \*\*\*
+To investigate the differences between IPAs AND Ales, we chose to use the KNN classification algorithm to investigate the relationship using the IBU and ABV data points. Here below, you will see the code explained as to how we filtered out the "IPA" and "Other Ale" categories and then ran the KNN function and then set up a confusion matrix. The last function calculates the accuracy of the data and how similar IPAs and Ales are. The functions come up with a percentage accuracy of 83.4% between IPAs and Other Ales based on the IBU and ABV data. 
 
 ```{r}
 # Prepare the beers dataset
