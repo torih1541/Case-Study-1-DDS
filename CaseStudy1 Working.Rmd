@@ -296,7 +296,62 @@ ggplot(beers, aes(x = Category, y = IBU, fill = Category)) +
 #### Find one other useful inference from the data that you feel Budweiser may be able to find value in.  You must convince them why it is important and back up your conviction with appropriate statistical evidence.
 
 ```{r}
+# Merge the datasets by the common ID fields
+merged_data <- merge(beers, breweries, by.x = "Brewery_id", by.y = "Brew_ID")
 
+# Remove rows with missing data
+merged_data <- na.omit(merged_data)
+
+# Clean the 'State' column in the merged data by trimming whitespace
+merged_data$State <- trimws(merged_data$State)
+
+# Define the market segments based on ABV and IBU
+merged_data <- merged_data %>%
+  mutate(
+    Segment = case_when(
+      ABV < 4 & IBU < 21 ~ "Light & Mild",
+      ABV >= 4 & ABV <= 6 & IBU >= 21 & IBU <= 50 ~ "Standard & Balanced",
+      ABV > 6 & IBU > 50 ~ "Strong & Bitter",
+      TRUE ~ "Other"
+    )
+  )
+
+# Selected states for the analysis
+selected_states <- c("KY", "OR")
+
+# Perform the segment analysis only for the selected states
+segment_analysis <- merged_data %>%
+  filter(State %in% selected_states) %>%
+  count(State, Segment) %>%
+  group_by(State) %>%
+  mutate(Percent = n / sum(n) * 100)
+
+# Print the segment analysis results
+print(segment_analysis)
+
+# Plot the segment distribution for the selected states
+ggplot(segment_analysis, aes(x = State, y = Percent, fill = Segment)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  coord_flip() +
+  scale_fill_brewer(palette = "Set3") +
+  labs(x = "State", y = "Percentage", title = "Beer Market Segmentation in KY and OR") +
+  theme_minimal()
 ```
 
 \*\*\* commentary
+From the data we have analyzed, we find that in Kentucky (KY), 28.6% of beers fall into the "Light & Mild" category, while a significant 71.4% are placed in the "Other" category. In Oregon (OR), the distribution is somewhat similar with 26.4% being "Light & Mild" and a substantial 73.6% categorized as "Other". This provides evidence of a potential preference for beers with higher ABV and IBU in these states, as the "Other" category likely encompasses "Standard & Balanced" and "Strong & Bitter" segments.​
+
+This trend aligns with broader market dynamics. The craft beer segment, known for its unique and often locally-inspired flavors, has seen considerable growth, now accounting for 24.6% of the $115 billion U.S. beer market1. Meanwhile, domestic beers, including Budweiser, made up around 69% of U.S. beer consumption in 20222. However, the total beer volume in the U.S. experienced a negative compound annual growth rate (CAGR) of 2% between 2017 and 20223.​
+
+The combination of these trends suggests a shifting landscape where consumers are increasingly attracted to craft beers. Thus, Budweiser's investment in local brands within KY and OR could be a strategic move to tap into this burgeoning market segment.​
+
+Looking towards the future, projections indicate an upward trajectory for the beer market. The U.S. beer market is forecasted to grow by 1.98% from 2024 to 20284, and the North American beer market is expected to reach USD 214 billion by 2029, growing at a CAGR of 4.39%5.​
+
+Drawing from these statistics and their implications, the evidence would suggest that Budweiser stands to gain by investing in local brands in states such as KY and OR. This approach would not only allow Budweiser to diversify its product portfolio but also position the brand to capitalize on the growing demand for more varied and locally-inspired flavors. In doing so, Budweiser could potentially increase its market share in the evolving U.S. beer industry.​
+
+Footnotes​
+https://www.brewersassociation.org/statistics-and-data/national-beer-stats/ ↩​
+https://www.statista.com/topics/1654/beer-industry-in-the-united-states/ ↩​
+https://www.theiwsr.com/key-trends-for-the-us-beer-market-in-2023/ ↩​
+https://www.statista.com/outlook/cmo/alcoholic-drinks/beer/united-states ↩​
+https://www.mordorintelligence.com/industry-reports/north-america-beer-market ↩
