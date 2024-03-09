@@ -17,7 +17,7 @@ This report presents an analysis of two datasets: Beers.csv and Breweries.csv, w
 	Name: Name of the brewery.
 	City: City where the brewery is located.
 	State: U.S. State where the brewery is located.
- 
+Shape file for US map: 
 Footnotes​
 https://www.brewersassociation.org/statistics-and-data/national-beer-stats/
 https://www.statista.com/topics/1654/beer-industry-in-the-united-states/
