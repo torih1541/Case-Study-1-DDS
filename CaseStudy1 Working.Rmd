@@ -119,7 +119,9 @@ print(tail(cleaned_data, 6))
 
 #### Compute the median alcohol content and international bitterness unit for each state. Plot a bar chart to compare.
 
-\*\*\* commentary
+The bar charts visualize the median alcohol content (ABV) and international bitterness units (IBU) for each state. The first chart shows the median ABV, with states arranged in ascending order of their median ABV values, while the second chart displays the median IBU, again in ascending order. A dashed red line represents the overall median across all states for each metric, offering a reference point to easily compare which states fall above or below the overall median.
+
+These visualizations help identify patterns and outliers in beer characteristics across different states, potentially reflecting regional preferences or brewing styles.
 
 ```{r}
 #Groups cleaned data by state and calculates median ABV and IBU
@@ -194,7 +196,9 @@ Through an analysis of our beer dataset, we've identified key insights into the 
 
 #### Is there an apparent relationship between the bitterness of the beer and its alcoholic content? Draw a scatter plot. Make your best judgment of a relationship and EXPLAIN your answer.
 
-commentary
+The scatter plot below shows the relationship between beer bitterness (IBU) and alcoholic content (ABV) with a linear model fit. From the visualization, we observe a positive slope of the fitted line, indicating a general trend where beers with higher alcoholic content also tend to have higher bitterness levels. This implies a relationship where stronger beers often possess a higher level of bitterness. However, it's important to note the scatter around the fitted line, indicating variability in this relationship. Some beers with a high ABV might not have very high IBU values and vice versa. This variability could be due to different brewing styles, ingredients, and processes that impact the final ABV and IBU of beer independently.
+
+In summary, while there seems to be a general trend indicating a positive relationship between beer's alcoholic content and its bitterness, the relationship is not absolute, and exceptions are evident across the dataset. This highlights the complexity of beer brewing, where multiple factors influence the final product's characteristics. ​
 
 ```{r}
 #Scatter plot of relationship between ABV and IBU
@@ -243,54 +247,12 @@ knn_table
 accuracy <- sum(knn_model == test$Category) / length(knn_model)
 accuracy 
 
-```
-
-```{r}
-# Categorize beers into 'IPA' and 'Other Ale'
-beers$Category <- ifelse(grepl("IPA", beers$Style, ignore.case = TRUE), "IPA", 
-                         ifelse(grepl("Ale", beers$Style, ignore.case = TRUE), "Other Ale", NA))
-
-# Filter out beers that do not fall into these two categories
-beers <- subset(beers, !is.na(Category))
-
-# T-test for ABV differences between IPAs and Other Ales
-t_test_abv <- t.test(ABV ~ Category, data = beers, subset = Category %in% c("IPA", "Other Ale"))
-t_test_abv
-
-# T-test for IBU differences between IPAs and Other Ales
-t_test_ibu <- t.test(IBU ~ Category, data = beers, subset = Category %in% c("IPA", "Other Ale"))
-t_test_ibu
-
-# ANOVA for the impact of beer style on ABV
-anova_abv <- aov(ABV ~ Category, data = beers)
-summary(anova_abv)
-
-# ANOVA for the impact of beer style on IBU
-anova_ibu <- aov(IBU ~ Category, data = beers)
-summary(anova_ibu)
-
-```
-
-```{r}
 # Scatter plot for ABV vs IBU with color-coding for beer types
 ggplot(beers, aes(x = IBU, y = ABV, color = Category)) + 
   geom_point(alpha = 0.5) + 
   labs(x = "International Bitterness Units (IBU)", y = "Alcohol By Volume (ABV)", title = "ABV vs IBU by Beer Type") +
   theme_minimal() +
   scale_color_brewer(palette = "Set1")
-
-# Box plots for ABV and IBU by beer type
-ggplot(beers, aes(x = Category, y = ABV, fill = Category)) + 
-  geom_boxplot() + 
-  labs(x = "Beer Type", y = "Alcohol By Volume (ABV)", title = "ABV Distribution by Beer Type") +
-  theme_minimal() +
-  scale_fill_brewer(palette = "Set1")
-
-ggplot(beers, aes(x = Category, y = IBU, fill = Category)) + 
-  geom_boxplot() + 
-  labs(x = "Beer Type", y = "International Bitterness Units (IBU)", title = "IBU Distribution by Beer Type") +
-  theme_minimal() +
-  scale_fill_brewer(palette = "Set1")
 ```
 
 #### Find one other useful inference from the data that you feel Budweiser may be able to find value in.  You must convince them why it is important and back up your conviction with appropriate statistical evidence.
@@ -338,7 +300,6 @@ ggplot(segment_analysis, aes(x = State, y = Percent, fill = Segment)) +
   theme_minimal()
 ```
 
-\*\*\* commentary
 From the data we have analyzed, we find that in Kentucky (KY), 28.6% of beers fall into the "Light & Mild" category, while a significant 71.4% are placed in the "Other" category. In Oregon (OR), the distribution is somewhat similar with 26.4% being "Light & Mild" and a substantial 73.6% categorized as "Other". This provides evidence of a potential preference for beers with higher ABV and IBU in these states, as the "Other" category likely encompasses "Standard & Balanced" and "Strong & Bitter" segments.​
 
 This trend aligns with broader market dynamics. The craft beer segment, known for its unique and often locally-inspired flavors, has seen considerable growth, now accounting for 24.6% of the $115 billion U.S. beer market1. Meanwhile, domestic beers, including Budweiser, made up around 69% of U.S. beer consumption in 20222. However, the total beer volume in the U.S. experienced a negative compound annual growth rate (CAGR) of 2% between 2017 and 20223.​
@@ -348,10 +309,3 @@ The combination of these trends suggests a shifting landscape where consumers ar
 Looking towards the future, projections indicate an upward trajectory for the beer market. The U.S. beer market is forecasted to grow by 1.98% from 2024 to 20284, and the North American beer market is expected to reach USD 214 billion by 2029, growing at a CAGR of 4.39%5.​
 
 Drawing from these statistics and their implications, the evidence would suggest that Budweiser stands to gain by investing in local brands in states such as KY and OR. This approach would not only allow Budweiser to diversify its product portfolio but also position the brand to capitalize on the growing demand for more varied and locally-inspired flavors. In doing so, Budweiser could potentially increase its market share in the evolving U.S. beer industry.​
-
-Footnotes​
-https://www.brewersassociation.org/statistics-and-data/national-beer-stats/ ↩​
-https://www.statista.com/topics/1654/beer-industry-in-the-united-states/ ↩​
-https://www.theiwsr.com/key-trends-for-the-us-beer-market-in-2023/ ↩​
-https://www.statista.com/outlook/cmo/alcoholic-drinks/beer/united-states ↩​
-https://www.mordorintelligence.com/industry-reports/north-america-beer-market ↩
