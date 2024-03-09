@@ -1,1 +1,7 @@
+# To run this project download the markdown file titled "Case Study 1 Working"
+#Be sure to have base, class, dplyr, ggplot, naniar, readr, sf, tidyverse and tools packages loaded.
+# Download the shape file 
+  https://github.com/torih1541/Case-Study-1-DDS/blob/2fc04adaa87dfea02d80ee678cd22fd01df77d72/tl_2023_us_state.shp
+# When running the markdown file for chunk 3 replace the file path with where the shapefile is located on your computer
+
 
