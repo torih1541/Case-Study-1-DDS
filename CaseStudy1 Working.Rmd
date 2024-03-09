@@ -60,7 +60,7 @@ breweries_by_state <- breweries %>%
   summarise(NumberOfBreweries = n())
 
 #Load US states shapefile for mapping
-us_states <- st_read("tl_2023_us_state/tl_2023_us_state.shp")
+us_states <- st_read("https://github.com/torih1541/Case-Study-1-DDS/blob/2fc04adaa87dfea02d80ee678cd22fd01df77d72/tl_2023_us_state.shp")
 
 #Merge the shapefile data with count data
 map_data1 <- merge(us_states, breweries_by_state, by.x= "NAME", by.y= "StateFullName", all.x = TRUE)
